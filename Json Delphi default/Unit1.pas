@@ -44,7 +44,7 @@ begin
     //get status
     ShowMessage('Status: ' + JSonObject.Get('status').JSONValue.Value);
 
-    //get tvshow
+    //get tvshow // commmmmmeeeeennntttt
     JSONValue := JSonObject.Get('tvshow').JSONValue;
     for J := 0 to TJSONArray(JSONValue).Size - 1 do
     begin
