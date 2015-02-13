@@ -1,0 +1,52 @@
+unit Unit1;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DBXJSON, Data.DBXJSONReflect,
+  Vcl.StdCtrls;
+
+type
+  TForm1 = class(TForm)
+    Memo1: TMemo;
+    Button1: TButton;
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.Button1Click(Sender: TObject);
+var
+  JSONObject: TJSONObject;
+  JSONArray: TJSONArray;
+  I, J: Integer;
+  JSONValue: TJSONValue;
+  JSONValueDetails: TJSONValue;
+begin
+  JSONArray := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(memo1.Lines.Text), 0) as TJSONArray;
+  for I := 0 to JSONArray.Size - 1 do
+  begin
+    JSONObject := JSONArray.Get(I) as TJsonObject;
+
+    ShowMessage('Text: ' + JSonObject.Get('competitionName').JSONValue.Value);
+
+    {JSONValue := JSonObject.Get('tvshow').JSONValue;
+    for J := 0 to TJSONArray(JSONValue).Size - 1 do
+    begin
+      JSONValueDetails := TJSONArray(JSONValue).Get(J);
+      ShowMessage('TvShow(' + TJSONPair(JSONValueDetails).JsonString.Value + '): ' + TJSONPair(JSONValueDetails).JSONValue.Value);
+    end;}
+  end;
+end;
+
+end.

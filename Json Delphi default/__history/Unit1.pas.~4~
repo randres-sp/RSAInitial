@@ -1,0 +1,67 @@
+unit Unit1;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DBXJSON, Data.DBXJSONReflect,
+  Vcl.StdCtrls;
+
+type
+  TForm1 = class(TForm)
+    Memo1: TMemo;
+    Button1: TButton;
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.Button1Click(Sender: TObject);
+var
+  o: TJSONObject;
+  a: TJSONArray;
+  book: TJSONObject;
+begin
+  // Create the outer JSON object which parents the others.
+  o := TJSONObject.Create;
+  try
+    // Create the books object, which contains the array of books...
+    a := TJSONArray.Create();
+
+    // add the array to the object.
+    o.AddPair('books',a);
+
+    // Create the first book
+    book := TJSONObject.Create;
+    book.AddPair( TJSONPair.Create('title','Zen') );
+    book.AddPair( TJSONPair.Create('subtitle','and The art of motorcycle maintenance.') );
+    book.AddPair( TJSONPair.Create('author','Robert M Pirsig') );
+    book.AddPair( TJSONPair.Create('isbn','9780061908019') );
+    // Add the book to the array
+    a.AddElement(book);
+
+    // Create the second book
+    book := TJSONObject.Create;
+    book.AddPair( TJSONPair.Create('title','Coding in Delphi') );
+    book.AddPair( TJSONPair.Create('subtitle','') );
+    book.AddPair( TJSONPair.Create('author','Nick Hodges') );
+    book.AddPair( TJSONPair.Create('isbn','978-1941266038') );
+    // Add the book to the array
+    a.AddElement(book);
+
+  finally
+    Memo1.Lines.Text := o.ToString;
+    o.Free;
+  end;
+end;
+
+end.
